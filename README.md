@@ -23,7 +23,7 @@ Offline license validation for Laravel applications using RSA-4096 signed PEM fi
 ## Installation
 
 ```bash
-composer require Nazrulalif/laravel-pem-license-validator
+composer require nazrulalif/laravel-pem-license-validator
 ```
 
 ### Publish Configuration

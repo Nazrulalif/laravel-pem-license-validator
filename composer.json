@@ -1,5 +1,5 @@
 {
-    "name": "Nazrulalif/laravel-pem-license-validator",
+    "name": "nazrulalif/laravel-pem-license-validator",
     "description": "Offline PEM license validation for Laravel applications using RSA-4096 signatures",
     "type": "library",
     "keywords": [
