@@ -1,0 +1,29 @@
+# Dependencies
+/vendor/
+
+# Composer
+composer.lock
+composer.phar
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Testing
+.phpunit.result.cache
+/coverage/
+
+# Build
+/build/
+/dist/
+
+# Temporary files
+*.log
+*.tmp
