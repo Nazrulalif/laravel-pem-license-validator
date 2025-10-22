@@ -13,6 +13,7 @@ class LicenseException extends Exception
     public const HARDWARE_MISMATCH = 1005;
     public const PARSE_ERROR = 1006;
     public const INVALID_PUBLIC_KEY = 1007;
+    public const PRODUCT_KEY_MISMATCH = 1008;
 
     public static function fileNotFound(string $path): self
     {
@@ -54,5 +55,13 @@ class LicenseException extends Exception
     public static function invalidPublicKey(): self
     {
         return new self("Invalid or missing public key configuration", self::INVALID_PUBLIC_KEY);
+    }
+
+    public static function productKeyMismatch(string $expected, string $actual): self
+    {
+        return new self(
+            "Product key mismatch. Expected: {$expected}, Actual: {$actual}",
+            self::PRODUCT_KEY_MISMATCH
+        );
     }
 }

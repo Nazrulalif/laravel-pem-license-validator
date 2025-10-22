@@ -49,6 +49,9 @@ class LicenseValidator
             // Check hardware binding
             $this->checkHardwareBinding();
 
+            // Check product key
+            $this->checkProductKey();
+
             // Cache the result
             $this->cache->put($this->licenseData);
 
@@ -253,6 +256,27 @@ class LicenseValidator
 
         if ($expectedHardwareId !== $currentHardwareId) {
             throw LicenseException::hardwareMismatch($expectedHardwareId, $currentHardwareId);
+        }
+    }
+
+    private function checkProductKey(): void
+    {
+        $expectedProductKey = $this->config['product_key'] ?? null;
+
+        // Skip validation if no product key is configured
+        if (empty($expectedProductKey)) {
+            return;
+        }
+
+        // Check if license contains product key
+        if (!isset($this->licenseData['productKey'])) {
+            throw LicenseException::parseError('Missing product key in license');
+        }
+
+        $licenseProductKey = $this->licenseData['productKey'];
+
+        if ($expectedProductKey !== $licenseProductKey) {
+            throw LicenseException::productKeyMismatch($expectedProductKey, $licenseProductKey);
         }
     }
 

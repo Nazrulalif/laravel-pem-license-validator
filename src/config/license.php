@@ -41,6 +41,18 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Product Key Validation
+    |--------------------------------------------------------------------------
+    |
+    | The expected product key that must match the product key in the license.
+    | Set to null or empty string to disable product key validation.
+    | This adds an extra layer of security to ensure the license is for the correct product.
+    |
+    */
+    'product_key' => env('LICENSE_PRODUCT_KEY'),
+
+    /*
+    |--------------------------------------------------------------------------
     | RSA Public Key
     |--------------------------------------------------------------------------
     |
