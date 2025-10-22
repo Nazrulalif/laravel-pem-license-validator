@@ -45,6 +45,12 @@
             }
         }
     },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/nazrulalif/laravel-pem-license-validator"
+        }
+    ],
     "minimum-stability": "stable",
     "prefer-stable": true
 }
