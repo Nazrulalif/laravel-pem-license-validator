@@ -9,6 +9,7 @@ Offline license validation for Laravel applications using RSA-4096 signed PEM fi
 - ✅ Configurable caching
 - ✅ Optional grace period
 - ✅ Hardware binding support
+- ✅ Product key validation
 - ✅ Feature flags (JSON-based)
 - ✅ Laravel middleware included
 - ✅ Facade support
@@ -23,7 +24,7 @@ Offline license validation for Laravel applications using RSA-4096 signed PEM fi
 ## Installation
 
 ```bash
-composer require nazrulalif/laravel-pem-license-validator
+composer require nazrulalif/laravel-pem-license-validator:dev-master
 ```
 
 ### Publish Configuration
@@ -58,6 +59,8 @@ return [
 
     'grace_period_days' => 0, // 0=disabled, 7=7 days after expiry
 
+    'product_key' => env('LICENSE_PRODUCT_KEY'), // Optional product validation
+
     'public_key' => env('LICENSE_PUBLIC_KEY', '-----BEGIN PUBLIC KEY-----...'),
 
     'on_failure' => [
@@ -66,6 +69,26 @@ return [
     ],
 ];
 ```
+
+### Environment Variables
+
+Add these to your `.env` file:
+
+```env
+LICENSE_PATH=storage/app/license.pem
+LICENSE_CACHE_ENABLED=true
+LICENSE_CACHE_TTL=86400
+LICENSE_GRACE_PERIOD_DAYS=0
+LICENSE_PRODUCT_KEY=your-product-key
+LICENSE_PUBLIC_KEY="-----BEGIN PUBLIC KEY-----
+...your public key here...
+-----END PUBLIC KEY-----"
+LICENSE_FAILURE_REDIRECT=/license-expired
+LICENSE_FAILURE_LOG=true
+LICENSE_FAILURE_ABORT_CODE=403
+```
+
+**Note:** `LICENSE_PRODUCT_KEY` is optional. If set, the license must contain a matching `productKey` field for validation to pass.
 
 ## Usage
 
@@ -229,6 +252,9 @@ try {
         case LicenseException::HARDWARE_MISMATCH:
             // Handle hardware binding
             break;
+        case LicenseException::PRODUCT_KEY_MISMATCH:
+            // Handle product key validation failure
+            break;
     }
 }
 ```
@@ -243,6 +269,12 @@ Ensure `license.pem` exists at the configured path (default: `storage/app/licens
 
 - License file may be corrupted or tampered
 - Public key in config doesn't match the key used to sign the license
+
+### Product key mismatch
+
+- The `productKey` in the license doesn't match `LICENSE_PRODUCT_KEY` in your `.env`
+- License was issued for a different product
+- Remove `LICENSE_PRODUCT_KEY` from `.env` to disable product key validation
 
 ### Permission denied
 
